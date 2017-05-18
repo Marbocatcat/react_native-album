@@ -1,25 +1,42 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Linking } from 'react-native';
 
 import Card from './Card';
 import CardSection from './CardSection';
+import Button from './Button';
 
 const AlbumDetail = ({ album }) => {
-  const { title, artist, thumbnail_image } = album;
-  const { headerContentStyle, thumbnailStyle } = style;
+  const { title, artist, thumbnail_image, image, url } = album;
+  const { headerContentStyle,
+          thumbnailStyle,
+          thumbnailContainerStyle,
+          headerTextStyle,
+          imageStyle } = style;
 
   return (
     <View>
       <Card>
         <CardSection>
-          <View>
-            <Image style={thumbnailStyle} source={{ uri: thumbnail_image }} />
+          <View style={thumbnailContainerStyle}>
+            <Image
+              style={thumbnailStyle}
+              source={{ uri: thumbnail_image }}
+            />
           </View>
           <View style={headerContentStyle}>
-            <Text>{title}</Text>
+            <Text style={headerTextStyle}>{title}</Text>
             <Text>{artist}</Text>
           </View>
+        </CardSection>
 
+        <CardSection>
+          <Image style={imageStyle} source={{ uri: image }} />
+        </CardSection>
+        <CardSection>
+
+          <Button onPress={() => Linking.openURL(url)}>
+            Buy Me 
+          </Button>
         </CardSection>
       </Card>
     </View>
@@ -31,10 +48,25 @@ const style = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-around',
   },
+  headerTextStyle: {
+    fontSize: 18,
+    fontFamily: 'Avenir Next',
+  },
   thumbnailStyle: {
     height: 50,
     width: 50,
-  }
+  },
+  thumbnailContainerStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  imageStyle: {
+    height: 300,
+    flex: 1,
+    width: null,
+  },
 });
 
 export default AlbumDetail;
